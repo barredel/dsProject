@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TechnionTournament implements Tournament{
-//baredel
+//baredelkkkkkk
     TechnionTournament(){};
 
     @Override
