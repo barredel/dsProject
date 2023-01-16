@@ -8,10 +8,6 @@ public class PlayerCard {
         this.goalNum = 0;
     }
 
-    public void addGoal(){
-        this.goalNum++;
-    }
-
     public int getGoalNum() {
         return goalNum;
     }
@@ -22,9 +18,5 @@ public class PlayerCard {
 
     public void setGoalNum(int goalNum) {
         this.goalNum = goalNum;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 }
