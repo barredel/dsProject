@@ -3,6 +3,37 @@ public class Team {
     private int score;
     private PlayerCard[] players;
 
+    public Team(Faculty faculty)
+    {
+        this.faculty = faculty;
+        this.score = 0;
+        this.players = new PlayerCard[11];
+    }
+
+    public void addPlayerToTeam(PlayerCard playerCard)
+    {
+        for(PlayerCard player : players)
+        {
+            if (player == null)
+            {
+                player = playerCard;
+                return;
+            }
+        }
+    }
+
+    public void removePlayerFromTeam(PlayerCard playerCard)
+    {
+        for (PlayerCard player : players)
+        {
+            if (player == playerCard)
+            {
+                player = playerCard;
+                return;
+            }
+        }
+    }
+
     public Faculty getFaculty() {
         return faculty;
     }
