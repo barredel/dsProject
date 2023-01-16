@@ -208,13 +208,9 @@ public class TwoThreeTree<E>
        {
            x = x.getParent();
            if (z != null)
-           {
                z = insertAndSplit(x,z);
-           }
            else
-           {
                updateKey(x);
-           }
        }
        if (z != null)
        {
@@ -222,7 +218,6 @@ public class TwoThreeTree<E>
           setChildren(w,x,z,null);
           this.root = w;
        }
-
     }
 
 
