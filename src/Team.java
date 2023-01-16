@@ -1,40 +1,31 @@
+import java.util.ArrayList;
+
 public class Team {
     private Faculty faculty;
     private int score;
-    private PlayerCard[] players;
+    private ArrayList<PlayerCard> players;
 
     public Team(Faculty faculty)
     {
         this.faculty = faculty;
         this.score = 0;
-        this.players = new PlayerCard[11];
+        this.players = new ArrayList<PlayerCard>();
     }
 
     public void addPlayerToTeam(PlayerCard playerCard)
     {
-        for(PlayerCard player : players)
-        {
-            if (player == null)
-            {
-                player = playerCard;
-                return;
-            }
-        }
+        this.players.add(playerCard);
     }
 
     public void removePlayerFromTeam(PlayerCard playerCard)
     {
-        for (PlayerCard player : players)
-        {
-            if (player == playerCard)
-            {
-                player = playerCard;
-                return;
-            }
-        }
+        this.players.remove(playerCard);
     }
 
-    //66
+    public void addScore(int x)
+    {
+        this.score += x;
+    }
 
     public Faculty getFaculty() {
         return faculty;
@@ -44,19 +35,7 @@ public class Team {
         return score;
     }
 
-    public PlayerCard[] getPlayers() {
+    public ArrayList<PlayerCard> getPlayers() {
         return players;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    public void setPlayers(PlayerCard[] players) {
-        this.players = players;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 }

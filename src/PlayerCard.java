@@ -8,6 +8,10 @@ public class PlayerCard {
         this.goalNum = 0;
     }
 
+    public void addGoal(){
+        this.goalNum++;
+    }
+
     public int getGoalNum() {
         return goalNum;
     }
