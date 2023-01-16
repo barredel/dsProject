@@ -321,4 +321,7 @@ public class TwoThreeTree<E>
         }
     }
 
+    public Leaf<E> getMax() {
+        return max;
+    }
 }
