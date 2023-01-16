@@ -21,7 +21,7 @@ public class TwoThreeTree<E>
     {
         if (x instanceof Leaf)
         {
-            if (x.getLeft().getPrimaryKey() == pk && x.getLeft().getSecondaryKey() == sk)
+            if (x.getPrimaryKey() == pk && x.getSecondaryKey() == sk)
             {
                 return (Leaf<E>) x;
             }
