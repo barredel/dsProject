@@ -1,6 +1,7 @@
 public class TwoThreeTree<E>
 {
     private InternalNode root;
+    private Leaf<E> max;
 
     public TwoThreeTree()
     {
@@ -180,7 +181,8 @@ public class TwoThreeTree<E>
 
     public void insert(InternalNode z)
     {
-       InternalNode y = this.root;
+        Leaf<E> lz =(Leaf<E>)z;
+        InternalNode y = this.root;
        while (y.getLeft()!= null)
        {
            if ( z.getPrimaryKey() < y.getLeft().getPrimaryKey() ||
@@ -218,6 +220,15 @@ public class TwoThreeTree<E>
           setChildren(w,x,z,null);
           this.root = w;
        }
+        lz.setPredecessor((predecessor(lz)));
+        if (successor(lz)==null)
+        {
+            this.max = lz;
+        }
+        else
+        {
+            successor(lz).setPredecessor(lz);
+        }
     }
 
     public InternalNode borrowOrMerge(InternalNode y)
