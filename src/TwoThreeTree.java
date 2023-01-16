@@ -265,17 +265,60 @@ public class TwoThreeTree<E>
             return z;
         }
         InternalNode x = z.getMiddle();
-            if(x.getRight() != null)
+        if(x.getRight() != null)
+        {
+            setChildren(y, x.getRight(), y.getLeft(), null);
+            setChildren(x, x.getLeft(), x.getMiddle(), null);
+        }
+        else
+        {
+            setChildren(x, x.getLeft(), x.getMiddle(), y.getLeft());
+            setChildren(z, z.getRight(), x, null);
+        }
+        return z;
+    }
+
+    public void delete(InternalNode x)
+    {
+        InternalNode y = x.getParent();
+        if (successor(x) == null)
+        {
+            this.max = predecessor(x);
+        }
+        else
+        {
+            successor(x).setPredecessor(predecessor(x));
+        }
+        if (x == y.getLeft())
+        {
+            setChildren(y, y.getMiddle(), y.getRight(), null);
+        }
+        else if (x == y.getMiddle())
+        {
+            setChildren(y, y.getLeft(), y.getRight(), null);
+        }
+        else setChildren(y, y.getLeft(), y.getMiddle(), null);
+        while(y != null)
+        {
+            if(y.getMiddle() == null)
             {
-                setChildren(y, x.getRight(), y.getLeft(), null);
-                setChildren(x, x.getLeft(), x.getMiddle(), null);
+                if (y != this.root)
+                {
+                    y = borrowOrMerge(y);
+                }
+                else
+                {
+                    this.root = y.getLeft();
+                    y.getLeft().setParent(null);
+                    return;
+                }
             }
             else
             {
-                setChildren(x, x.getLeft(), x.getMiddle(), y.getLeft());
-                setChildren(z, z.getRight(), x, null);
+                updateKey(y);
+                y = y.getParent();
             }
-            return z;
+        }
     }
 
 }
