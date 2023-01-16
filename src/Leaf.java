@@ -1,7 +1,7 @@
 public class Leaf <E> extends InternalNode
 {
 
-    protected E data;
+    private E data;
     private Leaf<E> predecessor;
 
     public Leaf(int primaryKey, int secondaryKey, E data)

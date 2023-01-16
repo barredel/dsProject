@@ -11,6 +11,10 @@ public class TwoThreeTree<E>
         m.setParent(root);
     }
 
+    public Leaf<E> search(int pk, int sk)
+    {
+        return search(this.root, pk, sk);
+    }
     public Leaf<E> search(InternalNode x, int pk, int sk)
     {
         if (x instanceof Leaf)
@@ -36,6 +40,48 @@ public class TwoThreeTree<E>
         {
             return search(x.getRight(),pk,sk);
         }
+    }
+
+    public Leaf<E> predecessor(InternalNode x)
+    {
+        InternalNode z = x.getParent();
+        InternalNode y;
+        while(x == z.getLeft())
+        {
+            x = z;
+            z = z.getParent();
+        }
+        if (x == z.getRight())
+            y=z.getMiddle();
+        else
+            y = z.getLeft();
+        while (y.getLeft() != null)
+        {
+            if (y.getRight() != null)
+                y = y.getRight();
+            else y = y.getLeft();
+        }
+        if (y.getPrimaryKey() > Integer.MIN_VALUE)
+            return (Leaf<E>)y;
+        else return null;
+    }
+
+    public void setChildren(InternalNode x,InternalNode l,InternalNode m,InternalNode r)
+    {
+        x.setLeft(l);
+        x.setMiddle(m);
+        x.setRight(r);
+        l.setParent(x);
+        if (m != null)
+            m.setParent(x);
+        if (r != null)
+            r.setParent(x);
+        updateKey(x);
+    }
+
+    public void insertAndSplit(InternalNode x,InternalNode z)
+    {
+
     }
 
 
