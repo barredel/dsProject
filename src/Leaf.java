@@ -1,14 +1,15 @@
-public class Leaf <E>
+public class Leaf <E> extends Node
 {
-    protected int primaryKey;
-    protected int secondaryKey;
-    protected E data;
 
-    public Leaf(E data, int primaryKey, int secondaryKey)
+    protected E data;
+    private Leaf<E> predecessor;
+
+    public Leaf(int primaryKey, int secondaryKey, E data)
     {
+        super (primaryKey, secondaryKey);
         this.data = data;
-        this.primaryKey = primaryKey;
-        this.secondaryKey = secondaryKey;
+        this.predecessor = null;
+
     }
 
     public E getData() {
@@ -16,27 +17,15 @@ public class Leaf <E>
     }
 
 
-    public int getPrimaryKey() {
-        return primaryKey;
-    }
-
-
-    public int getSecondaryKey() {
-        return secondaryKey;
-    }
-
-
     public void setData(E data) {
         this.data = data;
     }
 
-
-    public void setPrimaryKey(int primaryKey) {
-        this.primaryKey = primaryKey;
+    public Leaf<E> getPredecessor() {
+        return predecessor;
     }
 
-
-    public void setSecondaryKey(int secondaryKey) {
-        this.secondaryKey = secondaryKey;
+    public void setPredecessor(Leaf<E> predecessor) {
+        this.predecessor = predecessor;
     }
 }
