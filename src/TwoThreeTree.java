@@ -42,6 +42,57 @@ public class TwoThreeTree<E>
         }
     }
 
+    public Leaf<E> successor(InternalNode x)
+    {
+        InternalNode successor;
+        InternalNode z = x.getParent();
+        while (x==z.getRight() || z.getRight() == null && x == z.getMiddle())
+        {
+            x = z;
+            z = z.getParent();
+        }
+        if (x == z.getLeft())
+        {
+            successor = z.getMiddle();
+        }
+        else
+        {
+            successor = z.getRight();
+        }
+        while (successor.getLeft() != null)
+        {
+            successor = successor.getLeft();
+        }
+
+        if (successor.getPrimaryKey()<Integer.MAX_VALUE)
+        {
+            return (Leaf<E>) successor;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void updateKey (InternalNode x)
+    {
+        x.setPrimaryKey(x.getLeft().getPrimaryKey());
+        x.setSecondaryKey(x.getLeft().getSecondaryKey());
+
+        if (x.getMiddle() != null)
+        {
+            x.setPrimaryKey(x.getMiddle().getPrimaryKey());
+            x.setSecondaryKey(x.getMiddle().getSecondaryKey());
+
+        }
+        if ( x.getRight() != null)
+        {
+            x.setPrimaryKey(x.getRight().getPrimaryKey());
+            x.setSecondaryKey(x.getRight().getSecondaryKey());
+        }
+
+    }
+
     public Leaf<E> predecessor(InternalNode x)
     {
         InternalNode z = x.getParent();
