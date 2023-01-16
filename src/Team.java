@@ -22,6 +22,18 @@ public class Team {
         this.players.remove(playerCard);
     }
 
+    public PlayerCard getPlayerCard(int playerId)
+    {
+        for (PlayerCard playerCard : players)
+        {
+            if (playerCard.getPlayer().getId() == playerId)
+            {
+                return playerCard;
+            }
+        }
+        return null;
+    }
+
     public void addScore(int x)
     {
         this.score += x;
