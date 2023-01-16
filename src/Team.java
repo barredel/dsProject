@@ -34,6 +34,8 @@ public class Team {
         }
     }
 
+    //66
+
     public Faculty getFaculty() {
         return faculty;
     }
