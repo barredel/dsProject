@@ -116,6 +116,7 @@ public class TechnionTournament implements Tournament{
 
     }
 
+
     @Override
     public void getTopScorer(Player player) {
         player =  PlayerScoreTree.getMax().getData().getPlayer();
