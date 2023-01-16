@@ -21,7 +21,6 @@ public class InternalNode {
         this(primaryKey, secondaryKey, null, null);
     }
 
-
     public int getPrimaryKey() {
         return primaryKey;
     }
@@ -30,20 +29,10 @@ public class InternalNode {
         return secondaryKey;
     }
 
-    public void setPrimaryKey(int primaryKey) {
-        this.primaryKey = primaryKey;
-    }
 
-    public void setSecondaryKey(int secondaryKey) {
-        this.secondaryKey = secondaryKey;
-    }
 
     public InternalNode getParent() {
         return parent;
-    }
-
-    public void setParent(InternalNode parent) {
-        this.parent = parent;
     }
 
     public InternalNode getLeft() {
@@ -56,6 +45,17 @@ public class InternalNode {
 
     public InternalNode getRight() {
         return right;
+    }
+
+    public void setPrimaryKey(int primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public void setSecondaryKey(int secondaryKey) {
+        this.secondaryKey = secondaryKey;
+    }
+    public void setParent(InternalNode parent) {
+        this.parent = parent;
     }
 
     public void setLeft(InternalNode left) {

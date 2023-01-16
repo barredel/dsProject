@@ -136,6 +136,53 @@ public class TwoThreeTree<E>
     }
 
 
+    public void insert(InternalNode z)
+    {
+       InternalNode y = this.root;
+       while (y.getLeft()!= null)
+       {
+           if ( z.getPrimaryKey() < y.getLeft().getPrimaryKey() ||
+                   z.getPrimaryKey() == y.getLeft().getPrimaryKey() &&
+                           z.getSecondaryKey() >= y.getLeft().getSecondaryKey())
+           {
+               y = y.getLeft();
+           }
+           else if( z.getPrimaryKey() < y.getMiddle().getPrimaryKey() ||
+                        z.getPrimaryKey() == y.getMiddle().getPrimaryKey() &&
+                           z.getSecondaryKey() >= y.getMiddle().getSecondaryKey())
+           {
+               y = y.getMiddle();
+           }
+
+           else
+           {
+               y = y.getRight();
+           }
+
+       }
+       InternalNode x = y.getParent();
+       z = insertAndSplit(x,z);
+       while (x != this.root)
+       {
+           x = x.getParent();
+           if (z != null)
+           {
+               z = insertAndSplit(x,z);
+           }
+           else
+           {
+               updateKey(x);
+           }
+       }
+       if (z != null)
+       {
+          InternalNode w =  new InternalNode();
+          setChildren(w,x,z,null);
+          this.root = w;
+       }
+
+    }
+
 
 
 
