@@ -15,6 +15,7 @@ public class TwoThreeTree<E>
     {
         return search(this.root, pk, sk);
     }
+
     public Leaf<E> search(InternalNode x, int pk, int sk)
     {
         if (x instanceof Leaf)
@@ -41,7 +42,7 @@ public class TwoThreeTree<E>
             return search(x.getRight(),pk,sk);
         }
     }
-    ///
+
     public Leaf<E> successor(InternalNode x)
     {
         InternalNode successor;
@@ -130,9 +131,50 @@ public class TwoThreeTree<E>
         updateKey(x);
     }
 
-    public void insertAndSplit(InternalNode x,InternalNode z)
+    public InternalNode insertAndSplit(InternalNode x,InternalNode z)
     {
-
+        InternalNode l = x.getLeft();
+        InternalNode m = x.getMiddle();
+        InternalNode r = x.getRight();
+        if (r == null) {
+            if (z.getPrimaryKey() < l.getPrimaryKey() ||
+                    (z.getPrimaryKey() == l.getPrimaryKey() && z.getSecondaryKey() > l.getSecondaryKey()))
+            {
+                setChildren(x, z, l, m);
+            }
+            else if (z.getPrimaryKey() < m.getPrimaryKey() ||
+                    (z.getPrimaryKey() == m.getPrimaryKey() && z.getSecondaryKey() > m.getSecondaryKey()))
+            {
+                setChildren(x, l, z, m);
+            }
+            else setChildren(x, l, m, z);
+            return null;
+        }
+        InternalNode y = new InternalNode(-1, -1);
+        if (z.getPrimaryKey() < l.getPrimaryKey() ||
+                (z.getPrimaryKey() == l.getPrimaryKey() && z.getSecondaryKey() > l.getSecondaryKey()))
+        {
+            setChildren(x, z, l, null);
+            setChildren(y, m, r, null);
+        }
+        else if (z.getPrimaryKey() < m.getPrimaryKey() ||
+                (z.getPrimaryKey() == m.getPrimaryKey() && z.getSecondaryKey() > m.getSecondaryKey()))
+        {
+            setChildren(x, l, z, null);
+            setChildren(y, m, r, null);
+        }
+        else if (z.getPrimaryKey() < r.getPrimaryKey() ||
+                (z.getPrimaryKey() == r.getPrimaryKey() && z.getSecondaryKey() > r.getSecondaryKey()))
+        {
+            setChildren(x, l, m, null);
+            setChildren(y, z, r, null);
+        }
+        else
+        {
+            setChildren(x, l, m, null);
+            setChildren(y, r, z, null);
+        }
+        return y;
     }
 
 
