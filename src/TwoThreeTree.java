@@ -218,7 +218,7 @@ public class TwoThreeTree<E>
        }
        if (z != null)
        {
-          InternalNode w =  new InternalNode();
+          InternalNode w =  new InternalNode(Integer.MAX_VALUE, 0);
           setChildren(w,x,z,null);
           this.root = w;
        }
