@@ -270,6 +270,14 @@ public class TwoThreeTree<E>
     public void delete(InternalNode x)
     {
         InternalNode y = x.getParent();
+        if (successor(x) == null)
+        {
+            this.max = predecessor(x);
+        }
+        else
+        {
+            successor(x).setPredecessor(predecessor(x));
+        }
         if (x == y.getLeft())
         {
             setChildren(y, y.getMiddle(), y.getRight(), null);
