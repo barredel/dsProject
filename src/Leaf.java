@@ -1,4 +1,4 @@
-public class Leaf <E> extends Node
+public class Leaf <E> extends InternalNode
 {
 
     protected E data;
@@ -6,9 +6,10 @@ public class Leaf <E> extends Node
 
     public Leaf(int primaryKey, int secondaryKey, E data)
     {
-        super (primaryKey, secondaryKey);
+        super (primaryKey, secondaryKey, null,null);
         this.data = data;
         this.predecessor = null;
+
 
     }
 
