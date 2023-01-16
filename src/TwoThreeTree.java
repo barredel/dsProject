@@ -220,7 +220,51 @@ public class TwoThreeTree<E>
        }
     }
 
-
-
+    public InternalNode borrowOrMerge(InternalNode y)
+    {
+        InternalNode z = y.getParent();
+        if (y == z.getLeft())
+        {
+            InternalNode x = z.getMiddle();
+            if (x.getRight() != null)
+            {
+                setChildren(y, y.getLeft(), x.getLeft(), null);
+                setChildren(x, x.getMiddle(), x.getRight(), null);
+            }
+            else
+            {
+                setChildren(x, y.getLeft(), x.getLeft(), x.getMiddle());
+                setChildren(z, x, z.getRight(), null);
+            }
+            return z;
+        }
+        else if (y == z.getMiddle())
+        {
+            InternalNode x = z.getLeft();
+            if (x.getRight() != null)
+            {
+                setChildren(y, x.getRight(), y.getLeft(), null);
+                setChildren(x, x.getLeft(), x.getMiddle(), null);
+            }
+            else
+            {
+                setChildren(x, x.getLeft(), x.getMiddle(), y.getLeft());
+                setChildren(z, x, z.getRight(), null);
+            }
+            return z;
+        }
+        InternalNode x = z.getMiddle();
+            if(x.getRight() != null)
+            {
+                setChildren(y, x.getRight(), y.getLeft(), null);
+                setChildren(x, x.getLeft(), x.getMiddle(), null);
+            }
+            else
+            {
+                setChildren(x, x.getLeft(), x.getMiddle(), y.getLeft());
+                setChildren(z, z.getRight(), x, null);
+            }
+            return z;
+    }
 
 }
