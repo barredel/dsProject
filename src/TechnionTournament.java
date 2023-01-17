@@ -162,8 +162,10 @@ public class TechnionTournament implements Tournament{
                 topFaculty = topFaculty.getPredecessor();
                 helper.add(topFaculty.getData().getFaculty());
             }
-
-
+            for(int i = k-1; i >= 0; i--)
+            {
+                faculties.add(helper.get(i));
+            }
         }
 
     }
@@ -171,9 +173,9 @@ public class TechnionTournament implements Tournament{
     @Override
     public void getTopKScorers(ArrayList<Player> players, int k, boolean ascending) {
         Leaf<PlayerCard> topScorer = PlayerScoreTree.getMax();
-        players.add(topScorer.getData().getPlayer());
         if(!ascending)
         {
+            players.add(topScorer.getData().getPlayer());
             for(int i=1; i<k; i++)
             {
                 topScorer = topScorer.getPredecessor();
@@ -182,10 +184,16 @@ public class TechnionTournament implements Tournament{
         }
         else
         {
+            ArrayList<Player> helper = new ArrayList<Player>();
+            helper.add(topScorer.getData().getPlayer());
             for(int i=1; i<k; i++)
             {
                 topScorer = topScorer.getPredecessor();
-                players.add(0, topScorer.getData().getPlayer());
+                helper.add(topScorer.getData().getPlayer());
+            }
+            for(int i = k-1; i >= 0; i--)
+            {
+                players.add(helper.get(i));
             }
         }
     }
