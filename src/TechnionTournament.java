@@ -91,7 +91,7 @@ public class TechnionTournament implements Tournament{
                 totalScore[i] = 0;
             for (int id : goals)
             {
-                for (int i = 0; i < 11; i++)
+                for (int i = 0; i < teamLeaf.getData().getPlayers().size(); i++)
                 {
                     if(id == teamLeaf.getData().getPlayers().get(i).getPlayer().getId())
                     {
@@ -100,7 +100,7 @@ public class TechnionTournament implements Tournament{
                     }
                 }
             }
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < leaf1id.getData().getPlayers().size(); i++)
             {
                 if (totalScore[i] != 0)
                 {

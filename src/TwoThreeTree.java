@@ -30,11 +30,13 @@ public class TwoThreeTree<E>
                 return null;
             }
         }
-        if (pk<x.getMiddle().getPrimaryKey()||(pk==x.getMiddle().getPrimaryKey() && sk >= x.getSecondaryKey()))
+        if (pk<x.getLeft().getPrimaryKey()||
+                (pk==x.getLeft().getPrimaryKey() && sk >= x.getLeft().getSecondaryKey()))
         {
             return search(x.getLeft(),pk,sk);
         }
-        else if (pk<x.getPrimaryKey()||(pk==x.getPrimaryKey() && sk >= x.getSecondaryKey()))
+        else if (pk<x.getMiddle().getPrimaryKey()||
+                (pk==x.getMiddle().getPrimaryKey() && sk >= x.getMiddle().getSecondaryKey()))
         {
             return search(x.getMiddle(),pk,sk);
         }
