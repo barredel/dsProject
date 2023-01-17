@@ -34,11 +34,12 @@ public class TechnionTournament implements Tournament{
 
     @Override
     public void addPlayerToFaculty(int faculty_id,Player player) {
-        PlayerCard newPlayer = new PlayerCard(player);
-        Leaf<PlayerCard> playerLeaf = new Leaf<PlayerCard>(0,player.getId(), newPlayer);
+        Player newPlayer = new Player(player.getId(), player.getName());
+        PlayerCard newPlayerCard = new PlayerCard(newPlayer);
+        Leaf<PlayerCard> playerLeaf = new Leaf<PlayerCard>(0,newPlayer.getId(), newPlayerCard);
         PlayerScoreTree.insert(playerLeaf);
         Leaf<Team> teamLeaf = FacultyIdTree.search(faculty_id, 0);
-        teamLeaf.getData().addPlayerToTeam(newPlayer);
+        teamLeaf.getData().addPlayerToTeam(newPlayerCard);
     }
 
     @Override

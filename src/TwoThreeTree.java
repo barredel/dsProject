@@ -89,7 +89,7 @@ public class TwoThreeTree<E>
             x.setSecondaryKey(x.getMiddle().getSecondaryKey());
 
         }
-        if ( x.getRight() != null)
+        if (x.getRight() != null)
         {
             x.setPrimaryKey(x.getRight().getPrimaryKey());
             x.setSecondaryKey(x.getRight().getSecondaryKey());
@@ -114,7 +114,7 @@ public class TwoThreeTree<E>
         {
             if (y.getRight() != null)
                 y = y.getRight();
-            else y = y.getLeft();
+            else y = y.getMiddle();
         }
         if (y.getPrimaryKey() > Integer.MIN_VALUE)
             return (Leaf<E>)y;
