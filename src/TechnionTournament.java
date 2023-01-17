@@ -46,9 +46,8 @@ public class TechnionTournament implements Tournament{
     public void removePlayerFromFaculty(int faculty_id, int player_id) {
         Leaf<Team> leaf = FacultyIdTree.search(faculty_id, 0);
         PlayerCard player = leaf.getData().getPlayerCard(player_id);
-        int score = player.getGoalNum();
+        //int score = player.getGoalNum();
         leaf.getData().removePlayerFromTeam(player);
-        PlayerScoreTree.delete(PlayerScoreTree.search(score, player_id));
     }
 
     @Override
@@ -101,11 +100,11 @@ public class TechnionTournament implements Tournament{
                     }
                 }
             }
-            for (int i = 0; i < leaf1id.getData().getPlayers().size(); i++)
+            for (int i = 0; i < teamLeaf.getData().getPlayers().size(); i++)
             {
                 if (totalScore[i] != 0)
                 {
-                    PlayerCard player = leaf1id.getData().getPlayers().get(i);
+                    PlayerCard player = teamLeaf.getData().getPlayers().get(i);
                     Leaf<PlayerCard> playerLeaf = PlayerScoreTree.search(player.getGoalNum(), player.getPlayer().getId());
                     player.setGoalNum(player.getGoalNum()+totalScore[i]);
                     playerLeaf.setPrimaryKey(player.getGoalNum());
@@ -120,7 +119,9 @@ public class TechnionTournament implements Tournament{
 
     @Override
     public void getTopScorer(Player player) {
-        player =  PlayerScoreTree.getMax().getData().getPlayer();
+        Player topScorer =  PlayerScoreTree.getMax().getData().getPlayer();
+        player.setName(topScorer.getName());
+        player.setId(topScorer.getId());
     }
 
     @Override
@@ -141,7 +142,7 @@ public class TechnionTournament implements Tournament{
 
     @Override
     public void getTopKFaculties(ArrayList<Faculty> faculties, int k, boolean ascending) {
-        Leaf<Team> topFaculty = FacultyIdTree.getMax();
+        Leaf<Team> topFaculty = FacultyScoreTree.getMax();
         faculties.add(topFaculty.getData().getFaculty());
         if (!ascending)
         {
@@ -186,7 +187,9 @@ public class TechnionTournament implements Tournament{
 
     @Override
     public void getTheWinner(Faculty faculty) {
-        faculty = FacultyScoreTree.getMax().getData().getFaculty();
+        Faculty topFaculty = FacultyScoreTree.getMax().getData().getFaculty();
+        faculty.setId(topFaculty.getId());
+        faculty.setName(topFaculty.getName());
     }
 
     ///TODO - add below your own variables and methods

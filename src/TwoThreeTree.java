@@ -275,7 +275,7 @@ public class TwoThreeTree<E>
         else
         {
             setChildren(x, x.getLeft(), x.getMiddle(), y.getLeft());
-            setChildren(z, z.getRight(), x, null);
+            setChildren(z, z.getLeft(), x, null);
         }
         return z;
     }
