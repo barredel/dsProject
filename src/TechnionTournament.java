@@ -137,15 +137,16 @@ public class TechnionTournament implements Tournament{
                 maxPlayer = playerCard;
             }
         }
-        player = maxPlayer.getPlayer();
+        player.setId(maxPlayer.getPlayer().getId());
+        player.setName(maxPlayer.getPlayer().getName());
     }
 
     @Override
     public void getTopKFaculties(ArrayList<Faculty> faculties, int k, boolean ascending) {
         Leaf<Team> topFaculty = FacultyScoreTree.getMax();
-        faculties.add(topFaculty.getData().getFaculty());
         if (!ascending)
         {
+            faculties.add(topFaculty.getData().getFaculty());
             for(int i=1; i<k; i++)
             {
                 topFaculty = topFaculty.getPredecessor();
@@ -154,11 +155,15 @@ public class TechnionTournament implements Tournament{
         }
         else
         {
+            ArrayList<Faculty> helper = new ArrayList<Faculty>();
+            helper.add(topFaculty.getData().getFaculty());
             for(int i=1; i<k; i++)
             {
                 topFaculty = topFaculty.getPredecessor();
-                faculties.add(0, topFaculty.getData().getFaculty());
+                helper.add(topFaculty.getData().getFaculty());
             }
+
+
         }
 
     }
