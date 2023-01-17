@@ -19,7 +19,7 @@ public class TwoThreeTree<E>
 
     public Leaf<E> search(InternalNode x, int pk, int sk)
     {
-        if (x instanceof Leaf)
+        if (x.getLeft() == null)
         {
             if (x.getPrimaryKey() == pk && x.getSecondaryKey() == sk)
             {
