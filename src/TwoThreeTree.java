@@ -1,29 +1,29 @@
 public class TwoThreeTree<E>
 {
-    private InternalNode root;
-    private Leaf<E> max;
+    private Node<E> root;
+    private Node<E> max;
 
     public TwoThreeTree()
     {
-        Leaf <E> l = new Leaf<E>(Integer.MIN_VALUE,0, null);
-        Leaf <E> m = new Leaf<E>(Integer.MAX_VALUE,0, null);
-        this.root = new InternalNode(m.getPrimaryKey(), m.getSecondaryKey(), l, m);
+        Node <E> l = new Node<E>(Integer.MIN_VALUE,0, null);
+        Node <E> m = new Node<E>(Integer.MAX_VALUE,0, null);
+        this.root = new Node<E>(m.getPrimaryKey(), m.getSecondaryKey(), null, l, m);
         l.setParent(root);
         m.setParent(root);
     }
 
-    public Leaf<E> search(int pk, int sk)
+    public Node<E> search(int pk, int sk)
     {
         return search(this.root, pk, sk);
     }
 
-    public Leaf<E> search(InternalNode x, int pk, int sk)
+    public Node<E> search(Node<E> x, int pk, int sk)
     {
         if (x.getLeft() == null)
         {
             if (x.getPrimaryKey() == pk && x.getSecondaryKey() == sk)
             {
-                return (Leaf<E>) x;
+                return x;
             }
             else
             {
@@ -46,10 +46,10 @@ public class TwoThreeTree<E>
         }
     }
 
-    public Leaf<E> successor(InternalNode x)
+    public Node<E> successor(Node<E> x)
     {
-        InternalNode successor;
-        InternalNode z = x.getParent();
+        Node<E> successor;
+        Node<E> z = x.getParent();
         while (x==z.getRight() || z.getRight() == null && x == z.getMiddle())
         {
             x = z;
@@ -70,7 +70,7 @@ public class TwoThreeTree<E>
 
         if (successor.getPrimaryKey()<Integer.MAX_VALUE)
         {
-            return (Leaf<E>) successor;
+            return successor;
         }
         else
         {
@@ -78,7 +78,7 @@ public class TwoThreeTree<E>
         }
     }
 
-    public void updateKey (InternalNode x)
+    public void updateKey (Node<E> x)
     {
         x.setPrimaryKey(x.getLeft().getPrimaryKey());
         x.setSecondaryKey(x.getLeft().getSecondaryKey());
@@ -97,10 +97,10 @@ public class TwoThreeTree<E>
 
     }
 
-    public Leaf<E> predecessor(InternalNode x)
+    public Node<E> predecessor(Node<E> x)
     {
-        InternalNode z = x.getParent();
-        InternalNode y;
+        Node<E> z = x.getParent();
+        Node<E> y;
         while(x == z.getLeft())
         {
             x = z;
@@ -117,11 +117,11 @@ public class TwoThreeTree<E>
             else y = y.getMiddle();
         }
         if (y.getPrimaryKey() > Integer.MIN_VALUE)
-            return (Leaf<E>)y;
+            return y;
         else return null;
     }
 
-    public void setChildren(InternalNode x,InternalNode l,InternalNode m,InternalNode r)
+    public void setChildren(Node<E> x,Node<E> l,Node<E> m,Node<E> r)
     {
         x.setLeft(l);
         x.setMiddle(m);
@@ -134,11 +134,11 @@ public class TwoThreeTree<E>
         updateKey(x);
     }
 
-    public InternalNode insertAndSplit(InternalNode x,InternalNode z)
+    public Node<E> insertAndSplit(Node<E> x,Node<E> z)
     {
-        InternalNode l = x.getLeft();
-        InternalNode m = x.getMiddle();
-        InternalNode r = x.getRight();
+        Node<E> l = x.getLeft();
+        Node<E> m = x.getMiddle();
+        Node<E> r = x.getRight();
         if (r == null) {
             if (z.getPrimaryKey() < l.getPrimaryKey() ||
                     (z.getPrimaryKey() == l.getPrimaryKey() && z.getSecondaryKey() > l.getSecondaryKey()))
@@ -153,7 +153,7 @@ public class TwoThreeTree<E>
             else setChildren(x, l, m, z);
             return null;
         }
-        InternalNode y = new InternalNode(-1, -1);
+        Node<E> y = new Node<E>(-1, -1, null);
         if (z.getPrimaryKey() < l.getPrimaryKey() ||
                 (z.getPrimaryKey() == l.getPrimaryKey() && z.getSecondaryKey() > l.getSecondaryKey()))
         {
@@ -181,10 +181,10 @@ public class TwoThreeTree<E>
     }
 
 
-    public void insert(InternalNode z)
+    public void insert(Node<E> z)
     {
-        Leaf<E> lz =(Leaf<E>)z;
-        InternalNode y = this.root;
+        Node<E> lz = z;
+        Node<E> y = this.root;
        while (y.getLeft()!= null)
        {
            if ( z.getPrimaryKey() < y.getLeft().getPrimaryKey() ||
@@ -206,7 +206,7 @@ public class TwoThreeTree<E>
            }
 
        }
-       InternalNode x = y.getParent();
+        Node<E> x = y.getParent();
        z = insertAndSplit(x,z);
        while (x != this.root)
        {
@@ -218,7 +218,7 @@ public class TwoThreeTree<E>
        }
        if (z != null)
        {
-          InternalNode w =  new InternalNode(Integer.MAX_VALUE, 0);
+           Node<E> w =  new Node<E>(Integer.MAX_VALUE, 0, null);
           setChildren(w,x,z,null);
           this.root = w;
        }
@@ -233,12 +233,12 @@ public class TwoThreeTree<E>
         }
     }
 
-    public InternalNode borrowOrMerge(InternalNode y)
+    public Node<E> borrowOrMerge(Node<E> y)
     {
-        InternalNode z = y.getParent();
+        Node<E> z = y.getParent();
         if (y == z.getLeft())
         {
-            InternalNode x = z.getMiddle();
+            Node<E> x = z.getMiddle();
             if (x.getRight() != null)
             {
                 setChildren(y, y.getLeft(), x.getLeft(), null);
@@ -253,7 +253,7 @@ public class TwoThreeTree<E>
         }
         else if (y == z.getMiddle())
         {
-            InternalNode x = z.getLeft();
+            Node<E> x = z.getLeft();
             if (x.getRight() != null)
             {
                 setChildren(y, x.getRight(), y.getLeft(), null);
@@ -266,7 +266,7 @@ public class TwoThreeTree<E>
             }
             return z;
         }
-        InternalNode x = z.getMiddle();
+        Node<E> x = z.getMiddle();
         if(x.getRight() != null)
         {
             setChildren(y, x.getRight(), y.getLeft(), null);
@@ -280,9 +280,9 @@ public class TwoThreeTree<E>
         return z;
     }
 
-    public void delete(InternalNode x)
+    public void delete(Node<E> x)
     {
-        InternalNode y = x.getParent();
+        Node<E> y = x.getParent();
         if (successor(x) == null)
         {
             this.max = predecessor(x);
@@ -323,7 +323,7 @@ public class TwoThreeTree<E>
         }
     }
 
-    public Leaf<E> getMax() {
+    public Node<E> getMax() {
         return max;
     }
 }
